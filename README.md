@@ -1,4 +1,4 @@
-###mmdetection原本工具使用
+### mmdetection原本工具使用
 - 此项目建立在<https://github.com/open-mmlab/mmdetection>的基础上，其中<i>标题Getting Started</i>下有些链接比较概括
 - 首先按这个网址的方法进行安装<https://github.com/open-mmlab/mmdetection/blob/master/docs/get_started.md>
 - 然后可以看一下官方的这个使用教程，里面也有些链接<https://github.com/open-mmlab/mmdetection/blob/master/docs/get_started.md>
@@ -15,15 +15,16 @@
     这段代码，可以看到mmdetection/mmdet/datasets/coco.py文件的evaluate函数可以通过`result_files, tmp_dir = self.format_results(results, jsonfile_prefix) `来生成.json后缀的结果，
     <br>那么运行`python tools/test.py config_path checkpoint_path --format-only --eval-options jsonfile_prefix = "/home/yshuqiao/mmdetection/tools/results/regnet"`则可生成后缀为.json的结果文件regnet.json从而可以用coco_error_analysis.py来分析误差。
 
-###tools文件夹下另增的脚本
+### tools文件夹下另增的脚本
 - coco2GTjson.py可以用来把<font face="黑体" color=#008000 size=5>coco格式标注文件</font>转化为GTjson文件，后续可以用*visualizeGTandPredict.py*来可视化图片上的真实标注框。
 - defect_nums.py可以统计<font face="黑体" color=green size=5>coco格式标注文件</font>中各类缺陷的个数。
 - inference-me.py可以用来生成**结果的json文件**，后续可用*visualizeGTandPredict.py*来可视化图片上的预测框。
 
-###在mmdetection基础上修改的地方
+### 在mmdetection基础上修改的地方
 |resnet.py|regnet.py|schedule_1x.py|
 |:------|------:|:-------:|
 |se|cbam|cosineAnnealing|
+
 1.resnet.py中增加SE通道注意力
 <br>主要是在resnet.py里面添加SELayer类：
 ```python
@@ -89,15 +90,15 @@ lr_config = dict(
    <br>若要使用tensorboard查看模型训练过程中loss变化，应在default_runtime.py中去掉`dict(type='TensorboardLoggerHook')`的注释，并安装tensorboard包，然后在命令终端中输入`tensorboard --logdir=work_dir/`，就可以在浏览器打开http://localhost:6006/查看。
    - 模型其他配置参数的调整或替换：anchor_generator的scales,ratios和strides；img_norm_cfg中的mean和std；骨干网络或特征金字塔的替换；train_cfg里的rcnn里的sampler的type可用改为OHEMSampler；
    <br>roi_head里面loss_bbox可以改为CIoULoss并设置`reg_decoded_bbox=True`，loss_cls可以改为FocalLoss，其参数设置为：
-   ```python
-   loss_cls=dict(
-            type='FocalLoss',
-            use_sigmoid=True,
-            gamma=2.0,
-            alpha=0.25,
-            loss_weight=1.0),
-   ```
-   <br>配置文件中单引号的名称可以copy来在pycharm此项目中搜索，例如'CrossEntropyLoss'和'FocalLoss'，能找到相应的定义且可能找到可替换的部件。
+       ```python
+       loss_cls=dict(
+                type='FocalLoss',
+                use_sigmoid=True,
+                gamma=2.0,
+                alpha=0.25,
+                loss_weight=1.0),
+       ```
+       <br>配置文件中单引号的名称可以copy来在pycharm此项目中搜索，例如'CrossEntropyLoss'和'FocalLoss'，能找到相应的定义且可能找到可替换的部件。
    
    - **mmdetection**重点关注的文件夹是configs（含各种配置文件）、mmdet（含各种模型组件）和tools（含训练测试等主要工具），
    <br>大致可以认为mmdetection中有一个*大管家*，tools中的脚本是主函数，通过把config配置文件中的参数读到给*大管家*，把数据和模型（mmdet提供模型结构等）放到*大管家*；*大管家*用统一训练测试管道输出评价结果；
@@ -105,7 +106,7 @@ lr_config = dict(
    <br>至于不同版本的mmdetection(tags)，可以在github项目左上角下拉选择；ctrl+F可以在指定github项目中搜索关键字，方便查找一些模型结构相关的py文件。
    - 关于深度学习说两句：机器学习中主要了解矩阵、概率等相关概念；卷积神经网络中可以把卷积核与滤波器联系起来（[吴恩达的深度学习教程][4]b站上有）；其他要学习了解Linux、Cuda、Anaconda、pytorch的操作使用。
    - 除了[faster RCNN](https://zhuanlan.zhihu.com/p/137454940?utm_source=wechat_session&utm_medium=social&utm_oi=57622111715328)，yolov5、efficientdet、fcos、centernet可以去了解一下，其中fcos使用了atss自适应采样，centernet是无锚框的检测算法；
-   <br>跑通一个网络主要关注：*数据的预处理和结果评价*、*模型结构*、*优化器配置*等。
+   <br>跑通一个网络主要关注：*数据的预处理和结果评价*、*模型结构*、*优化器配置*等，看代码过程中除了debug，可用print来看各个环节输出的张量形状。
 
 [1]:https://mp.weixin.qq.com/s/LslHGseIj8fO001Vf0C9pA
 [2]:https://mp.weixin.qq.com/s/vcFH5gChIYGxFeFxuwEzAw
