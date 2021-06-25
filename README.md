@@ -44,13 +44,13 @@ class SELayer(nn.Module):
         y = self.fc(y).view(b,c,1,1)
         return x*y.expand_as(x)
 ```
-<br>并在Bottleneck模块类中添加self.se参数，在其中的forward函数里添加：
+并在Bottleneck模块类中添加self.se参数，在其中的forward函数里添加：
 ```python
 if self.se:
     se_block = SELayer(self.planes)
     out = se_block(out)
 ```
-<br>Bottleneck类中也能看到，如果加入generalized_attention模块（Transformer）这样的插件的话，会插入到Bottleneck中第一个卷积层conv1（卷积核大小为3x3，紧接着BN层和relu）和第二个卷积层conv2之间。
+Bottleneck类中也能看到，如果加入generalized_attention模块（Transformer）这样的插件的话，会插入到Bottleneck中第一个卷积层conv1（卷积核大小为3x3，紧接着BN层和relu）和第二个卷积层conv2之间。
 
 2.regnet.py中增加CBAM混合注意力
 <br>在类中添加self.se参数（其Bottleneck类会调用resnext.py中的Bottleneck，而resnext.py中的Bottleneck继承了resnet.py的Bottleneck）和self.cbam参数，
@@ -67,7 +67,7 @@ lr_config = dict(
     step=[8, 11]  # 在第8和11个epoch时降低学习率，可调成step=[16, 19]
 )
 ```
-<br>改为
+改为
 ```python
 lr_config = dict(
     policy='CosineAnnealing',
@@ -98,11 +98,17 @@ lr_config = dict(
                 alpha=0.25,
                 loss_weight=1.0),
        ```
-       <br>配置文件中单引号的名称可以copy来在pycharm此项目中搜索，例如'CrossEntropyLoss'和'FocalLoss'，能找到相应的定义且可能找到可替换的部件。
+       配置文件中单引号的名称可以copy来在pycharm此项目中搜索，例如'CrossEntropyLoss'和'FocalLoss'，能找到相应的定义且可能找到可替换的部件。
    
    - **mmdetection**重点关注的文件夹是configs（含各种配置文件）、mmdet（含各种模型组件）和tools（含训练测试等主要工具），
    <br>大致可以认为mmdetection中有一个*大管家*，tools中的脚本是主函数，通过把config配置文件中的参数读到给*大管家*，把数据和模型（mmdet提供模型结构等）放到*大管家*；*大管家*用统一训练测试管道输出评价结果；
-   <br>可以重点关注这些py文件：mmdet/models/detectors/two_stage.py、mmdet/models/roi_heads/standard_roi_heads.py、mmdet/models/dense_heads/rpn_head.py
+   <br>可以重点关注这些py文件：mmdet/models/detectors/two_stage.py、mmdet/models/roi_heads/standard_roi_heads.py、mmdet/models/dense_heads/rpn_head.py以及
+   <br>训练信息相关:从tools/train.py文件ctrl点击train_detector可进入mmdet/apis/train.py，看到tran_detector函数底下有`runner.run(data_loaders, cfg.workflow, cfg.total_epochs)`,
+   <br>再Ctrl点击run可进入所安装的包的内部文件/home/yshuqiao/anaconda/envs/open-mmlab/lib/python3.7/site-packages/mmcv/runner/epoch_based_runner.py，
+   <br>其中可以看到run函数下面有`epoch_runner(data_loaders[i],**kargs)`实则调用了train函数中的`self.run_iter(data_batch,train_mode=True)`，另外还用到了`logger.info`，但是找不到打印训练的loss和acc等信息的输出处，
+   <br>倒是只在mmdet/datasets/coco.py中看到`print_log(log_msg, logger=logger)`，或许是epoch_based_runner.py中的val函数通过run_iter中的val_step间接地调用了tests/test_data/test_dataset.py中的test_dataset_evaluation函数或是tools/test.py或tools/eval_metric.py,
+   <br>很大可能是与tests/test_data/test_dataset.py中_build_demo_runner的val_step以及test_evaluation_hook函数有关，而test_evaluation_hook函数中`evalhook.evaluate = MagicMock()`Ctrl点击evaluate可以进入mmdet/core/evaluation/eval_hooks.py中的evaluate函数，
+   <br>其中`eval_res = self.dataloader.dataset.evaluate(results, logger=runner.logger, **self.eval_kwargs)`中evaluate对应coco的则为coco_dataset.evaluate，而对应自己定义的数据集则调用相应的evaluate函数；另外在mmdet/apis/train.py中还有这一句`eval_hook = DistEvalHook if distributed else EvalHook`，Ctrl点击EvalHook也能跳转到mmdet/core/evaluation/eval_hooks.py。
    <br>至于不同版本的mmdetection(tags)，可以在github项目左上角下拉选择；ctrl+F可以在指定github项目中搜索关键字，方便查找一些模型结构相关的py文件。
    - 关于深度学习说两句：机器学习中主要了解矩阵、概率等相关概念；卷积神经网络中可以把卷积核与滤波器联系起来（[吴恩达的深度学习教程][4]b站上有）；其他要学习了解Linux、Cuda、Anaconda、pytorch的操作使用。
    - 除了[faster RCNN](https://zhuanlan.zhihu.com/p/137454940?utm_source=wechat_session&utm_medium=social&utm_oi=57622111715328)，yolov5、efficientdet、fcos、centernet可以去了解一下，其中fcos使用了atss自适应采样，centernet是无锚框的检测算法；
