@@ -1,3 +1,4 @@
+此项目github地址为<https://github.com/yshuqiao/steelDetect>,码云地址为<https://gitee.com/yang_shuqiao/steelDetect>
 ### mmdetection原本工具使用
 - 此项目建立在<https://github.com/open-mmlab/mmdetection>的基础上，其中<i>标题Getting Started</i>下有些链接比较概括
 - 首先按这个网址的方法进行安装<https://github.com/open-mmlab/mmdetection/blob/master/docs/get_started.md>
@@ -52,7 +53,7 @@ if self.se:
 ```
 Bottleneck类中也能看到，如果加入generalized_attention模块（Transformer）这样的插件的话，会插入到Bottleneck中第一个卷积层conv1（卷积核大小为3x3，紧接着BN层和relu）和第二个卷积层conv2之间。
 
-2.regnet.py中增加CBAM混合注意力
+2.regnet.py中增加CBAM混合注意力，可以参考<https://zhuanlan.zhihu.com/p/99261200>
 <br>在类中添加self.se参数（其Bottleneck类会调用resnext.py中的Bottleneck，而resnext.py中的Bottleneck继承了resnet.py的Bottleneck）和self.cbam参数，
 <br>如果self.cbam为True，则初始化ChannelAttention类和SpatialAttention类，相应地，在前传函数forward中的最后一个阶段后面添加cbam。
 <br>而如果self.se为True，则对第三阶段和第四阶段的残差层传入self.se=True的参数值，使残差层中每一个Bottleneck的残差支路末尾，即在与恒等映射支路相加之前添加SE模块。
@@ -82,7 +83,7 @@ lr_config = dict(
 - 模型可视化工具[Netron](https://github.com/lutzroeder/Netron)
 - 对mmdetection的解读：[ GiantPandaCV公众号中【MMDetection 超全专栏】][1]、[OpenMMLab | 轻松掌握 MMDetection 整体构建流程(一)][2]、[MMDETECTION最小复刻版(五)：YOLOV5转化内幕][3]
 - 根据需要调整config文件（以faster_rcnn_r50_fpn_1x_coco.py为例）：
-   - coco格式数据的制作与配置修改：对后缀为xml的voc格式的数据标签，可以通过脚本（可查找CSDN博客相关参考）转换成后缀为json的coco格式的；若自己制作数据集，可用labelimg或labelme，也是可以通过脚本转化成coco格式；
+   - coco格式数据的制作与配置修改：对后缀为xml的voc格式的数据标签，可以通过脚本（可查找CSDN博客或知乎相关参考）转换成后缀为json的coco格式的；若自己制作数据集，可用labelimg或labelme，也是可以通过脚本转化成coco格式；
    <br>可以通过对数据标签的统计分析得到数据集目标的数量、长宽比、面积分布等信息；通过脚本划分数据集为训练集和测试集，对训练集的数据增强可以参考<https://github.com/maozezhong/CV_ToolBox>；
    <br>配置文件中，需要调整coco_detection.py中的data_root,img_scale,samples_per_gpu(batchsize)；mmdet/datasets/coco.py里面的类别名称CLASSES，另外可设iou_thrs=[5]。
    - 学习率设置与否使用预训练模型：schedule_1x.py中如果优化器用了SGD，那么一般设置学习率lr=gpu_nums·0.00125·samples_per_gpu；default_runtime.py中可以设置load_from=预训练模型，其中预训练模型可以由项目首页的**Benchmark and model zoo**标题中点击Faster R-CNN，跳转到<https://github.com/open-mmlab/mmdetection/tree/master/configs/faster_rcnn>选择下载。

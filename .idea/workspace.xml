@@ -28,8 +28,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="281">
-                <caret line="109" column="100" selection-start-line="109" selection-start-column="100" selection-end-line="109" selection-end-column="100" />
+              <first_editor>
+                <caret column="102" selection-start-column="102" selection-end-column="102" />
                 <folding>
                   <element signature="e#641#792#0" />
                   <element signature="e#16#71#0" />
@@ -68,8 +68,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mmdet/datasets/coco.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12">
-              <caret line="442" column="15" lean-forward="true" selection-start-line="442" selection-start-column="15" selection-end-line="442" selection-end-column="50" />
+            <state relative-caret-position="137">
+              <caret line="447" column="16" lean-forward="true" selection-start-line="447" selection-start-column="16" selection-end-line="447" selection-end-column="16" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -136,9 +136,9 @@
       <find>SELayer</find>
       <find>collect_env</find>
       <find>配置文件中</find>
-      <find>checkpoint_config</find>
-      <find>print_log</find>
       <find>coco</find>
+      <find>print_log</find>
+      <find>checkpoint_config</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -223,18 +223,18 @@
       <updated>1624100746424</updated>
       <workItem from="1624100748644" duration="3533000" />
       <workItem from="1624109812770" duration="3031000" />
-      <workItem from="1624155206341" duration="67675000" />
+      <workItem from="1624155206341" duration="70616000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74239000" />
+    <option name="totallyTimeSpent" value="77180000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1476" height="878" extended-state="7" />
+    <frame x="-7" y="-7" width="1477" height="878" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14033851" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14023961" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -444,22 +444,29 @@
     <entry file="file://$PROJECT_DIR$/configs/_base_/default_runtime.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/mmdet/apis/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="122" column="61" lean-forward="true" selection-start-line="122" selection-start-column="8" selection-end-line="122" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mmdet/datasets/coco.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="447" column="16" lean-forward="true" selection-start-line="447" selection-start-column="16" selection-end-line="447" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tools/train.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="337">
           <caret line="168" column="12" lean-forward="true" selection-start-line="168" selection-start-column="12" selection-end-line="168" selection-end-column="12" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mmdet/datasets/coco.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12">
-          <caret line="442" column="15" lean-forward="true" selection-start-line="442" selection-start-column="15" selection-end-line="442" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -484,18 +491,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mmdet/apis/train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="122" column="61" lean-forward="true" selection-start-line="122" selection-start-column="8" selection-end-line="122" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="281">
-            <caret line="109" column="100" selection-start-line="109" selection-start-column="100" selection-end-line="109" selection-end-column="100" />
+          <first_editor>
+            <caret column="102" selection-start-column="102" selection-end-column="102" />
             <folding>
               <element signature="e#641#792#0" />
               <element signature="e#16#71#0" />
